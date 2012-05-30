@@ -1,8 +1,9 @@
-﻿<Properties>
+﻿<Properties GitUserInfo="UsingGIT">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="TestServer/Main.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="TestServer/TestServer.cs">
     <Files>
       <File FileName="TestServer/Main.cs" Line="13" Column="1" />
+      <File FileName="TestServer/TestServer.cs" Line="77" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
