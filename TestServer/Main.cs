@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 
 namespace TestServer
 {
@@ -6,7 +7,13 @@ namespace TestServer
 	{
 		public static void Main (string[] args)
 		{
-			Console.WriteLine ("Hello World!");
+			RfbTcpServer myTestServer = new RfbTcpServer();
+
+			Thread.Sleep(1000);
+
+			RfbClient myTest = new RfbClient();
+
+
 		}
 	}
 }

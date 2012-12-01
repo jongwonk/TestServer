@@ -1,9 +1,15 @@
 ﻿<Properties GitUserInfo="UsingGIT">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="TestServer/TestServer.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="TestServer\RfbTcpServer.cs">
     <Files>
-      <File FileName="TestServer/Main.cs" Line="13" Column="1" />
-      <File FileName="TestServer/TestServer.cs" Line="77" Column="4" />
+      <File FileName="TestServer\Main.cs" Line="16" Column="4" />
+      <File FileName="TestServer\RfbTcpServer.cs" Line="91" Column="4" />
+      <File FileName="TestServer\IStream.cs" Line="19" Column="6" />
+      <File FileName="TestServer\RfbServerObject.cs" Line="17" Column="9" />
+      <File FileName="TestServer\RfbClient.cs" Line="30" Column="3" />
+      <File FileName="TestServer\RfbObject.cs" Line="24" Column="6" />
+      <File FileName="TestServer\RfbClientObject.cs" Line="13" Column="5" />
+      <File FileName="TestServer\RfbServer.cs" Line="6" Column="6" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
