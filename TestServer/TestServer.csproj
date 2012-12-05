@@ -37,13 +37,22 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="IStream.cs" />
-    <Compile Include="RfbClient.cs" />
-    <Compile Include="RfbServerObject.cs" />
     <Compile Include="RfbObject.cs" />
-    <Compile Include="RfbClientObject.cs" />
-    <Compile Include="RfbTcpServer.cs" />
-    <Compile Include="RfbServer.cs" />
+    <Compile Include="Server\RfbMessageHandler.cs" />
+    <Compile Include="Server\RfbTcpServer.cs" />
+    <Compile Include="Server\RfbServer.cs" />
+    <Compile Include="Client\ClientHandler.cs" />
+    <Compile Include="Client\RfbClient.cs" />
+    <Compile Include="Interface\IStream.cs" />
+    <Compile Include="Client\RfbClientObject.cs" />
+    <Compile Include="Server\Tcp\RfbTcpMessageHandler.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Server\" />
+    <Folder Include="Client\" />
+    <Folder Include="Interface\" />
+    <Folder Include="Server\Tcp\" />
+    <Folder Include="Server\Udp\" />
+  </ItemGroup>
 </Project>

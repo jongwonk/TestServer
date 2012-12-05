@@ -2,7 +2,7 @@ using System;
 
 namespace TestServer
 {
-	   public abstract class RfbObject
+	   public class RfbObject
 	   {
 		public enum State{Idle=0,VersionInfo=1,Security=2,ClientInit=3,ServerInit=4,WaitMsg=5,};
 		public enum Version{Invalid=0,v33=1,v37=2, v38=3,};
@@ -11,16 +11,13 @@ namespace TestServer
 		public enum C2SMsg{SetPixelFormat=0,SetEncodings=2,FBUpdateRequest=3,KeyEvent=4,PointerEvent=5,ClientCutText=6, };
 
 		protected ExclusiveAccess exAccess;
-		protected Version serverVersion;
-		protected SecurityType securityType;
+		protected Version 		 serverVersion;
+		protected SecurityType 	 securityType;
 
 		 public RfbObject ()
 		 {
 		 }
-		public abstract bool RfbVersionInfo();
-		public abstract bool RfbSecirityType();
-		public abstract bool RfbClientInit();
-		public abstract bool RfbServerInit();
+
 	   }
 }
 
