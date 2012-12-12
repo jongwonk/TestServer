@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using System.Text;
 
 namespace TestServer
 {
@@ -11,7 +12,10 @@ namespace TestServer
 
 			Thread.Sleep(1000);
 
-			RfbClient myTest = new RfbClient();
+			string passwd = "pass1";
+
+			RfbClient myTest = new RfbTcpClient(passwd);
+			myTest.runProcessMessage();
 
 
 		}

@@ -2,12 +2,14 @@ using System;
 
 namespace TestServer
 {
-	   public class RfbServer
-	   {
-			 public RfbServer ()
-			 {
-			 }
+		public abstract class RfbServer
+		{
+			public RfbServer ()
+			{
 
-	   }
+			}
+
+
+		}
 }
 

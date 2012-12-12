@@ -1,11 +1,14 @@
 ﻿<Properties GitUserInfo="UsingGIT">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="c:\Users\qp4575\Documents\Projects\TestServer\TestServer\Server\RfbMessageHandler.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="TestServer/Server/Tcp/RfbTcpServerMessageHandler.cs">
     <Files>
-      <File FileName="TestServer\Main.cs" Line="14" Column="11" />
-      <File FileName="TestServer\RfbObject.cs" Line="15" Column="41" />
-      <File FileName="c:\Users\qp4575\Documents\Projects\TestServer\TestServer\Server\RfbMessageHandler.cs" Line="149" Column="27" />
-      <File FileName="TestServer\Server\Tcp\RfbTcpMessageHandler.cs" Line="18" Column="35" />
+      <File FileName="TestServer/Server/RfbMessageHandler.cs" Line="196" Column="34" />
+      <File FileName="TestServer/Main.cs" Line="16" Column="4" />
+      <File FileName="TestServer/Client/Tcp/RfbTcpClient.cs" Line="40" Column="29" />
+      <File FileName="TestServer/Server/Tcp/RfbTcpServer.cs" Line="29" Column="9" />
+      <File FileName="TestServer/Server/Tcp/RfbTcpServerMessageHandler.cs" Line="50" Column="30" />
+      <File FileName="TestServer/RfbObject.cs" Line="21" Column="16" />
+      <File FileName="TestServer/Server/script/property.xml" Line="3" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

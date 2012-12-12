@@ -9,14 +9,13 @@ using System.IO;
 
 namespace TestServer
 {
-	   public delegate bool Command();
+	   public delegate int Command();
 
 	#region ServerInitMessage
 	struct ServerInitMessage
 	{
 		public ushort width;
 		public ushort height;
-		public Pixel_Format pf;
 		public int name_len;
 		public byte[] name;
 		
@@ -48,28 +47,6 @@ namespace TestServer
 			// height
 			Buffer.BlockCopy(BitConverter.GetBytes(height),0,msg,2,2);
 			
-			//pixel format
-			msg[4] = pf.bpp;        // bpp
-			msg[5] = pf.depth;      // depth
-			msg[6] = pf.bigEndian;  // big endian
-			msg[7] = pf.trueColour; // true colour
-			
-			// redMax
-			Buffer.BlockCopy(BitConverter.GetBytes(pf.redMax),0,msg,8,2);
-			
-			// greenMax
-			Buffer.BlockCopy(BitConverter.GetBytes(pf.greenMax),0,msg,10,2);
-			
-			// blueMax
-			Buffer.BlockCopy(BitConverter.GetBytes(pf.blueMax),0,msg,12,2);
-			
-			msg[14] = pf.redShift;   // redShift
-			msg[15] = pf.greenShift; // greenShift
-			msg[16] = pf.blueShift;  // blueShift
-			
-			// padding
-			Buffer.BlockCopy(BitConverter.GetBytes(pf.padding),0,msg,17,3);
-			
 			// name length
 			Buffer.BlockCopy(BitConverter.GetBytes(name.Length),0,msg,20,4);
 			
@@ -88,8 +65,16 @@ namespace TestServer
 
 		private Command rfbVersionInfo;
 		private Command rfbSecurityType;
-		private Command rfbClientInit;
+		private Command rfbLogin;
 		private Command rfbServerInit;
+		private Command rfbIdle;
+
+		private Command rfbCheckFile;
+		private Command rfbWriteFile;
+		private Command rfbCopyFile;
+		private Command rfbGetSyncFolders;
+		private Command rfbSetSyncFolders;
+		private Command rfbDeleteFile;
 
 /*
 		//S2C message handler
@@ -99,6 +84,30 @@ namespace TestServer
 		public abstract bool RfbServerCutText();
 */
 
+		public Command RfbCheckFile {
+			get{ return rfbCheckFile;}
+			set{ rfbCheckFile = value;}
+		}
+		public Command RfbWriteFile {
+			get{ return rfbWriteFile;}
+			set{ rfbWriteFile = value;}
+		}
+		public Command RfbCopyFile {
+			get{ return rfbCopyFile;}
+			set{ rfbCopyFile = value;}
+		}
+		public Command RfbDeleteFile {
+			get{ return rfbDeleteFile;}
+			set{ rfbDeleteFile = value;}
+		}
+		public Command RfbGetSyncFolders {
+			get{ return rfbGetSyncFolders;}
+			set{ rfbGetSyncFolders = value;}
+		}
+		public Command RfbSetSyncFolders {
+			get{ return rfbSetSyncFolders;}
+			set{ rfbSetSyncFolders = value;}
+		}
 		public Command RfbVersionInfo {
 			get {return rfbVersionInfo;}
 			set{rfbVersionInfo = value;} 
@@ -107,13 +116,18 @@ namespace TestServer
 			get{return rfbSecurityType;}
 			set{rfbSecurityType = value;}
 		}
-		public Command RfbClientInit {
-			get{ return rfbClientInit;} 
-			set{rfbClientInit = value;} 
+		public Command RfbLogin {
+			get{ return rfbLogin;} 
+			set{rfbLogin = value;} 
 		} 
 		public Command RfbServerInit { 
 			get{ return rfbServerInit;}
-			set{rfbServerInit = value;} }
+			set{rfbServerInit = value;} 
+		}
+		public Command RfbIdle { 
+			get{ return rfbIdle;}
+			set{rfbIdle = value;} 
+		}
 
 		 public RfbMessageHandler ()
 		 {
@@ -131,33 +145,79 @@ namespace TestServer
 				switch(nextState)
 				{
 				case State.Idle:
-					Thread.Sleep(2000);
-					nextState = State.VersionInfo;
+					switch((CmdList)rfbIdle())
+					{
+					case CmdList.Idle:
+						Thread.Sleep(1000);
+						nextState = State.VersionInfo;
+						break;
+					case CmdList.GetSyncFolders:
+						nextState = State.GetSyncFolders;
+						break;
+					case CmdList.SetSyncFolders:
+						nextState = State.SetSyncFolders;
+						break;
+					case CmdList.CheckFile:
+						nextState = State.CheckFile;
+						break;
+					case CmdList.CopyFile:
+						nextState = State.CopyFile;
+						break;
+					case CmdList.DeleteFile:
+						nextState = State.DeleteFile;
+						break;
+					case CmdList.WriteFile:
+						nextState = State.WriteFile;
+						break;
+					default:
+						break;
+					}
 					break;
 				case State.VersionInfo:
-					if(rfbVersionInfo())
+					if(Convert.ToBoolean(rfbVersionInfo()))
 						nextState = State.Security;
 					else
 						nextState = State.Idle;
 				break;
 				case State.Security:
-					if(rfbSecurityType())
-					nextState = State.ServerInit;
+					if(Convert.ToBoolean(rfbSecurityType()))
+					nextState = State.Login;
 					else
 						nextState = State.Idle;
 					break;
+				case State.Login:
+					if(Convert.ToBoolean(rfbLogin()))  // from Client
+						nextState = State.ServerInit;
+					else
+						nextState = State.Idle;
+					break;
+
 				case State.ServerInit:
-					if(rfbServerInit())
-					nextState = State.ClientInit;
+					if(Convert.ToBoolean(rfbServerInit()))
+					nextState = State.Idle;
 					else
 						nextState = State.Idle;
 					break;
-				case State.ClientInit:
-					if(rfbClientInit())
-						nextState = State.Idle;
-					else
-						nextState = State.Idle;
+				case State.GetSyncFolders:
+					
 					break;
+				case State.SetSyncFolders:
+
+					nextState = State.Idle;
+					break;
+				case State.CheckFile:
+
+					nextState = State.Idle;					
+					break;
+				case State.CopyFile:
+
+					nextState = State.Idle;
+					break;
+				case State.DeleteFile:
+
+					nextState = State.Idle;
+					break;
+				case State.WriteFile:
 				default:
 					nextState = State.Idle;
 					break;
