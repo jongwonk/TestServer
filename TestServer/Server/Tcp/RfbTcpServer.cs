@@ -28,10 +28,18 @@ namespace TestServer
 	    		while(true)
     			{
 	    			TcpClient client = tcpListener.AcceptTcpClient();
-					RfbMessageHandler mh = new RfbTcpServerMessageHandler(client);
-					mh.StartProcessMessage();
+				Thread thread = new Thread(new ParameterizedThreadStart(clientHandler));
+                                    thread.Start(client);
                }
 		  }
+
+		private void clientHandler(object obj)
+		{
+			RfbMessageHandler mh = new RfbTcpServerMessageHandler((TcpClient)obj);
+			mh.StartProcessMessage();
+		}
+
+
 		}
 
 	}
